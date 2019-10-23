@@ -61,6 +61,7 @@
     <Compile Include="CookieHelper.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExtensionHelper\ByteExtHelper.cs" />
     <Compile Include="ExtensionHelper\DataTableExtHelper.cs" />
     <Compile Include="ExtensionHelper\DateTimeExtHelper.cs" />
