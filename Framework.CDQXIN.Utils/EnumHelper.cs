@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -153,6 +154,140 @@ namespace Framework.CDQXIN.Utils
 
             return enumValues.Cast<Enum>().FirstOrDefault(value => GetDescription(value) == descriptionValue);
         }
+        #endregion
+
+
+        #region  使用DescriptionAttribute特性的辅助方法
+
+        /// <summary>
+        /// 获取使用<see cref="DescriptionAttribute"/>描述的枚举类的描述信息
+        /// </summary>
+        /// <typeparam name="T">枚举类</typeparam>
+        /// <param name="enumVal">枚举值</param>
+        /// <returns>描述信息</returns>
+        public static string GetDescription<T>(T enumVal)
+        {
+            var valueStr = enumVal.ToString();
+
+            var member = typeof(T).GetMember(valueStr).FirstOrDefault();
+            if (member == null)
+            {
+                return valueStr;
+            }
+
+            var attr =
+                member.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as
+                    DescriptionAttribute;
+            return attr == null ? valueStr : attr.Description;
+        }
+
+        /// <summary>
+        /// 根据值获取使用<see cref="DescriptionAttribute"/>描述的枚举类的描述信息
+        /// </summary>
+        /// <typeparam name="T">枚举类</typeparam>
+        /// <param name="enumVal">枚举值</param>
+        /// <returns>描述信息</returns>
+        public static string GetDescriptionByValue<T>(object enumVal)
+        {
+            if (enumVal == null) return string.Empty;
+
+            var valueStr = System.Enum.GetName(typeof(T), enumVal);
+            if (string.IsNullOrWhiteSpace(valueStr)) return string.Empty;
+
+            var member = typeof(T).GetMember(valueStr).FirstOrDefault();
+            if (member == null)
+            {
+                return valueStr;
+            }
+
+            var attr =
+                member.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as
+                    DescriptionAttribute;
+            return attr == null ? valueStr : attr.Description;
+        }
+
+        /// <summary>
+        /// 获取<see cref="T"/>枚举类型的所有成员
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <returns>成员列表</returns>
+        public static IDictionary<object, string> GetEnumMembers<T>()
+        {
+            var dicMemebers = new Dictionary<object, string>();
+
+            foreach (var field in typeof(T).GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                var attr = field.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
+                    as DescriptionAttribute;
+                var fieldDesc = attr == null ? field.Name : attr.Description;
+                var fieldValue = field.GetRawConstantValue();
+
+                dicMemebers.Add(fieldValue, fieldDesc);
+            }
+
+            return dicMemebers;
+        }
+
+        #endregion 
+
+        #region Flag型枚举
+
+        /// <summary>
+        /// 获取<see cref="T"/>枚举类型的所有位操作的成员
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="flagValue">与操作后的结果</param>
+        /// <param name="needLog2">兼容部分1，2，3类型的枚举，存储时将其值进行2的N次方操作，此处将其转换为原始值</param>
+        /// <param name="baseValue">兼容部分枚举使用特定的Int值起始的情况，如出货类型等</param>
+        /// <returns>成员列表</returns>
+        public static IDictionary<int, string> GetSelectedEnumMembers<T>(int flagValue, bool needLog2 = false, int baseValue = 0)
+        {
+            var dicMemebers = new Dictionary<int, string>();
+
+            foreach (var field in typeof(T).GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                var attr = field.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
+                    as DescriptionAttribute;
+                var fieldDesc = attr == null ? field.Name : attr.Description;
+                var fieldValue =ConvertHelper.GetInteger(field.GetRawConstantValue());
+
+                // 扣除起始值
+                fieldValue = fieldValue - baseValue;
+                // 需要2的N次方
+                if (needLog2)
+                {
+                    fieldValue = (int)Math.Pow(2, fieldValue);
+                }
+
+                if ((flagValue & fieldValue) > 0)
+                {
+                    dicMemebers.Add(fieldValue, fieldDesc);
+                }
+            }
+
+            return dicMemebers;
+        }
+
+        /// <summary>
+        /// 获取<see cref="T"/>枚举类型的所有位操作的成员
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="flagValue">与操作后的结果</param>
+        /// <param name="needLog2">兼容部分1，2，3类型的枚举，存储时将其值进行2的N次方操作，此处将其转换为原始值</param>
+        /// <param name="baseValue">兼容部分枚举使用特定的Int值起始的情况，如出货类型等</param>
+        /// <returns>成员列表</returns>
+        public static string GetSelectedEnumMemberDescription<T>(int flagValue, bool needLog2 = false,
+            int baseValue = 0)
+        {
+            var dicMembers = GetSelectedEnumMembers<T>(flagValue, needLog2, baseValue);
+            if (dicMembers != null && dicMembers.Any())
+            {
+                return string.Join(",", dicMembers.Values);
+            }
+
+            return string.Empty;
+        }
+
         #endregion
     }
 }
