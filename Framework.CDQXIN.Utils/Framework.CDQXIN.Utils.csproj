@@ -50,10 +50,12 @@
     <Compile Include="CacheHelper.cs" />
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="ConvertHelper.cs" />
+    <Compile Include="CookieHelper.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExtensionHelper\ByteExtHelper.cs" />
     <Compile Include="ExtensionHelper\DataTableExtHelper.cs" />
+    <Compile Include="ExtensionHelper\DateTimeExtHelper.cs" />
     <Compile Include="ExtensionHelper\ListExtHelper.cs" />
     <Compile Include="ExtensionHelper\ObjectExtHelper.cs" />
     <Compile Include="ExtensionHelper\StringExtHelper.cs" />

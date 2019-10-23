@@ -104,5 +104,61 @@ namespace Framework.CDQXIN.Utils
             }
             return obj;
         }
+
+        /// <summary>
+        /// 获取节点指定属性值
+        /// </summary>
+        /// <param name="node">xml节点</param>
+        /// <param name="attrName">属性名</param>
+        /// <returns></returns>
+        public static string GetNodeAttr(XmlNode node, string attrName)
+        {
+            foreach (XmlAttribute xmlAttribute in node.Attributes)
+            {
+                if (xmlAttribute.Name.ToLower() == attrName.ToLower())
+                {
+                    return (xmlAttribute.Value == null) ? string.Empty : xmlAttribute.Value.ToString();
+                }
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// 获取节点指定节点
+        /// </summary>
+        /// <param name="node">xml节点</param>
+        /// <param name="nodeName">xml节点名</param>
+        /// <returns></returns>
+        public static XmlNode GetXmlNode(XmlNode node, string nodeName)
+        {
+            foreach (XmlNode xmlNode in node.ChildNodes)
+            {
+                if (xmlNode.LocalName.ToLower() == nodeName.ToLower())
+                {
+                    return xmlNode;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 读取xml文件的指定节点
+        /// </summary>
+        /// <param name="filepath">文件路径</param>
+        /// <param name="nodeLocalName">节点名称</param>
+        /// <returns></returns>
+        public static XmlNode GetXmlNodeFromFile(string filepath, string nodeLocalName)
+        {
+            if (File.Exists(filepath))
+            {
+                XmlDocument xmldocument = new XmlDocument();
+                FileStream fileStream = File.Open(filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                xmldocument.Load(fileStream);
+                fileStream.Close();
+                fileStream.Dispose();
+                return xmldocument.SelectSingleNode(nodeLocalName);
+            }
+            return null;
+        }
     }
 }
