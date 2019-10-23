@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -66,6 +67,98 @@ namespace Framework.CDQXIN.Utils.ExtensionHelper
             return Convert.ChangeType(value, t);
         }
         #endregion
+
+        /// <summary>
+        /// 将泛型集合类转换成DataTable
+        /// </summary>
+        /// <typeparam name="T">集合项类型</typeparam>
+        /// <param name="list">集合</param>
+        /// <returns>数据集(表)</returns>
+        public static DataTable ToDataTableExtend<T>(IList<T> list, List<string> removeColNames)
+        {
+            return ToDataTableExtend<T>(list, removeColNames, null);
+        }
+        /// <summary>    
+        /// 将泛型集合类转换成DataTable
+        /// </summary>    
+        /// <typeparam name="T">集合项类型</typeparam>
+        /// <param name="list">集合</param>    
+        /// <param name="propertyName">需要返回的列的列名</param>
+        /// <returns>数据集(表)</returns>
+        public static DataTable ToDataTableExtend<T>(IList<T> list, List<string> removeColNames, params string[] propertyName)
+        {
+            List<string> propertyNameList = new List<string>();
+            if (propertyName != null)
+            {
+                propertyNameList.AddRange(propertyName);
+            }
+            DataTable result = new DataTable();
+            var flag = false;
+            if (list.Count > 0)
+            {
+                PropertyInfo[] propertys = list[0].GetType().GetProperties();
+                foreach (PropertyInfo pi in propertys)
+                {
+                    if (propertyNameList.Count == 0)
+                    {
+                        //if (DBNull.Value.Equals(pi.PropertyType))
+                        //{
+                        //   // pi.PropertyType = DateTime;
+                        //}
+                        Type colType = pi.PropertyType;
+                        if (colType.IsGenericType && colType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        {
+                            colType = colType.GetGenericArguments()[0];
+                        }
+                        flag = removeColNames != null && removeColNames.Exists(p => p.ToLower() == pi.Name.ToLower());
+                        if (!flag)
+                        {
+                            result.Columns.Add(pi.Name, colType);
+                        }
+
+                        //result.Columns.Add(pi.Name, pi.PropertyType);
+                    }
+                    else
+                    {
+                        if (propertyNameList.Contains(pi.Name))
+                        {
+                            flag = removeColNames != null && removeColNames.Exists(p => p.ToLower() == pi.Name.ToLower());
+                            if (!flag)
+                            {
+                                result.Columns.Add(pi.Name, pi.PropertyType);
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < list.Count; i++)
+                {
+                    ArrayList tempList = new ArrayList();
+                    foreach (PropertyInfo pi in propertys)
+                    {
+                        if (!removeColNames.Exists(p => p.ToLower() == pi.Name.ToLower()))
+                        {
+                            if (propertyNameList.Count == 0)
+                            {
+                                object obj = pi.GetValue(list[i], null);
+                                tempList.Add(obj);
+                            }
+                            else
+                            {
+                                if (propertyNameList.Contains(pi.Name))
+                                {
+                                    object obj = pi.GetValue(list[i], null);
+                                    tempList.Add(obj);
+                                }
+                            }
+                        }
+
+                    }
+                    object[] array = tempList.ToArray();
+                    result.LoadDataRow(array, true);
+                }
+            }
+            return result;
+        }
 
     }
 }

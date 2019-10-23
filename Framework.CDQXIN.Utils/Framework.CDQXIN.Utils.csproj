@@ -56,6 +56,7 @@
     <Compile Include="ExtensionHelper\ListExtHelper.cs" />
     <Compile Include="ExtensionHelper\ObjectExtHelper.cs" />
     <Compile Include="ExtensionHelper\StringExtHelper.cs" />
+    <Compile Include="IPHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexHelper.cs" />
   </ItemGroup>
