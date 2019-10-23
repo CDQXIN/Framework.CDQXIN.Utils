@@ -38,6 +38,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -66,6 +67,7 @@
     <Compile Include="SecurityHelper.cs" />
     <Compile Include="SendMailHelper.cs" />
     <Compile Include="SmtpMailHelper.cs" />
+    <Compile Include="ValidateCodeHelper.cs" />
     <Compile Include="WebApiHelper.cs" />
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
