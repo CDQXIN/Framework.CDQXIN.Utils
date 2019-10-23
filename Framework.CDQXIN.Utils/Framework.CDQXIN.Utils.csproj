@@ -59,6 +59,7 @@
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="CookieHelper.cs" />
+    <Compile Include="CsvHelper.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExcelHelper.cs" />
