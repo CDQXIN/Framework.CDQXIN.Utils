@@ -60,6 +60,7 @@
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="CookieHelper.cs" />
     <Compile Include="CsvHelper.cs" />
+    <Compile Include="DataTableHelper.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExcelHelper.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="SecurityHelper.cs" />
     <Compile Include="SendMailHelper.cs" />
     <Compile Include="SmtpMailHelper.cs" />
+    <Compile Include="SqlBulkHelper.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="ValidateCodeHelper.cs" />
     <Compile Include="WebApiHelper.cs" />
