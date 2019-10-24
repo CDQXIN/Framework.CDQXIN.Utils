@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Framework.CDQXIN.Utils
 {
+    /// <summary>
+    /// 批量插入
+    /// </summary>
     public static class SqlBulkHelper
     {
 
