@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Framework.CDQXIN.Utils
 {
+    /// <summary>
+    /// 扩展
+    /// </summary>
     public static class DataTableHelper
     {
         /// <summary>
