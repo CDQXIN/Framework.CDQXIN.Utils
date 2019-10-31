@@ -286,5 +286,15 @@ namespace Framework.CDQXIN.Utils.ExtensionHelper
             return treelist;
         }
 
+        /// <summary>
+        /// List<int>转化为逗号链接的字符串
+        /// </summary>
+        /// <param name="lisFrom"></param>
+        /// <returns></returns>
+        public static string StringJoinCommaFromList(List<int> lisFrom)
+        { 
+        return String.Join(",", lisFrom.ConvertAll<string>(new Converter<int, string>(m => m.ToString())).ToArray());
+        }
+
     }
 }
