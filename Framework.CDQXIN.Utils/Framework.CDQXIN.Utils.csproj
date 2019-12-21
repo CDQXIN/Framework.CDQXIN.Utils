@@ -88,6 +88,7 @@
     <Compile Include="RegexHelper.cs" />
     <Compile Include="SecurityHelper.cs" />
     <Compile Include="SendMailHelper.cs" />
+    <Compile Include="Singleton.cs" />
     <Compile Include="SmtpMailHelper.cs" />
     <Compile Include="SqlBulkHelper.cs" />
     <Compile Include="StringHelper.cs" />
