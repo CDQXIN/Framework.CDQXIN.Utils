@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="CacheHelper.cs" />
     <Compile Include="ConfigHelper.cs" />
+    <Compile Include="ConsoleHelper.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="CookieHelper.cs" />
     <Compile Include="CsvHelper.cs" />
