@@ -75,6 +75,7 @@
     <Compile Include="ImageHelper.cs" />
     <Compile Include="IPHelper.cs" />
     <Compile Include="MailHelper.cs" />
+    <Compile Include="MD5Helper.cs" />
     <Compile Include="MemoryCacheHelper.cs" />
     <Compile Include="PDFHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
