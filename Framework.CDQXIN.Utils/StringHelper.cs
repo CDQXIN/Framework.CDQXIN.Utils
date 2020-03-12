@@ -888,5 +888,29 @@ namespace Framework.CDQXIN.Utils
         }
         #endregion
 
+        #region C#实现Java版的UrlEncode方法
+        /// <summary>
+        /// C#实现Java版的UrlEncode方法
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string EncodeOfJava(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in str)
+            {
+                if (HttpUtility.UrlEncode(c.ToString(), Encoding.UTF8).Length > 1)
+                {
+                    sb.Append(HttpUtility.UrlEncode(c.ToString(), Encoding.UTF8).ToUpper());
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+        #endregion
+
     }
 }
