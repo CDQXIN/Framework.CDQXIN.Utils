@@ -96,6 +96,7 @@
     <Compile Include="HttpHeper.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="IPHelper.cs" />
+    <Compile Include="LambdaHelper.cs" />
     <Compile Include="MailHelper.cs" />
     <Compile Include="MappingExtend\ExpressionGenericMapper.cs" />
     <Compile Include="MappingExtend\ExpressionMapper.cs" />
