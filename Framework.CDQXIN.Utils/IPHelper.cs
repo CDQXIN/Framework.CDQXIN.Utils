@@ -34,7 +34,7 @@ namespace Framework.CDQXIN.Utils
 
 
         /// <summary> 
-        /// 取得客户端真实IP。如果有代理则取第一个非内网地址 
+        /// 取得客户端真实IP。如果有代理则1取第一个非内网地址 
         /// </summary> 
         public static string GetIP
         {
