@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Framework.CDQXIN.Utils.ReflectionExtension
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ReflectionHelper
     {
         #region 成员读写

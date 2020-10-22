@@ -9,6 +9,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
@@ -837,6 +838,93 @@ namespace Framework.CDQXIN.Utils
                 Console.WriteLine("Exception: " + ex.Message);
                 return null;
             }
+        }
+        /// <summary>
+        /// 可以导出复杂表头的表格（通过拼接table然后正则解析）
+        /// </summary>
+        /// <param name="strHtml"></param>
+        public static void ExportExcel_Universal(string strHtml)
+        {
+            HSSFWorkbook hssfworkbook = new HSSFWorkbook(); ;//创建Workbook对象
+            HSSFSheet sheet1 = (HSSFSheet)hssfworkbook.CreateSheet("测试多表头");//创建工作表
+            string rowContent = string.Empty;
+            MatchCollection rowCollection = Regex.Matches(strHtml, @"<tr[^>]*>[\s\S]*?<\/tr>",
+                               RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture); //对tr进行筛选
+
+
+
+            for (int i = 0; i < rowCollection.Count; i++)
+            {
+                HSSFRow row = (HSSFRow)sheet1.CreateRow(i);
+                rowContent = rowCollection[i].Value;
+                MatchCollection columnCollection = Regex.Matches(rowContent, @"<td[^>]*>[\s\S]*?<\/td>",
+                     RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture); //对td进行筛选
+                for (int j = 0; j < columnCollection.Count; j++)
+                {
+                    var match = Regex.Match(columnCollection[j].Value, "<td[\\s\\S]*?rowspan='(?<row>[\\s\\S]*?)'[\\s\\S]*?colspan='(?<col>[\\s\\S]*?)'[\\s\\S]*?row='(?<row1>[\\s\\S]*?)'[\\s\\S]*?col='(?<col1>[\\s\\S]*?)'>(?<value>[\\s\\S]*?)<\\/td>", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                    if (match.Success)
+                    {
+                        int rowspan = Convert.ToInt32(match.Groups["row"].Value);//表格跨行
+                        int colspan = Convert.ToInt32(match.Groups["col"].Value);//表格跨列
+                        int rowcount = Convert.ToInt32(match.Groups["row1"].Value);//所在行
+                        int col = Convert.ToInt32(match.Groups["col1"].Value);//所在列
+                        string value = match.Groups["value"].Value;
+
+                        if (colspan == 1)//判断是否跨列
+                        {
+                            var cell = row.CreateCell(col);//创建列
+                            cell.SetCellValue(value);//设置列的值
+                            if (value.Length > 0)
+                            {
+                                int width = value.Length * 25 / 6;
+                                if (width > 255)
+                                    width = 250;
+                                sheet1.SetColumnWidth(col, width * 256);
+                            }
+                        }
+                        //判断是否跨行、跨列
+                        if (rowspan > 1 || colspan > 1)
+                        {
+                            int firstRow = 0, lastRow = 0, firstCol = 0, lastCol = 0;
+                            if (rowspan > 1)//跨行
+                            {
+                                firstRow = rowcount;
+                                lastRow = firstRow + rowspan - 1;
+                            }
+                            else
+                            {
+                                firstRow = lastRow = i;
+                            }
+                            if (colspan > 1)//跨列
+                            {
+                                firstCol = col;
+                                int cols = col + colspan;
+                                for (; col < cols; col++)
+                                {
+                                    var cell = row.CreateCell(col);
+                                    cell.SetCellValue(value);
+                                }
+                                lastCol = col - 1;
+                            }
+                            else
+                            {
+                                firstCol = lastCol = col;
+                            }                  //关键是这里，设置起始行数，结束行数；起始列数，结束列数
+                            sheet1.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
+                        }
+
+                    }
+                }
+            }
+
+            string year = DateTime.Now.Year.ToString();
+            string ppath = @"D:\" + DateTime.Now.ToString("yyyyMMddmmss") + ".xls";
+            //File.Create(ppath);
+
+            FileStream file = new FileStream(ppath, FileMode.Create);
+            hssfworkbook.Write(file);
+            file.Close();
+
         }
     }
 }

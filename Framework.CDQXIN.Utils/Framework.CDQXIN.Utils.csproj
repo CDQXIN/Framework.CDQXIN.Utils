@@ -70,8 +70,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiGateResult.cs" />
+    <Compile Include="BitmapExt.cs" />
+    <Compile Include="ByteExt.cs" />
     <Compile Include="CacheHelper.cs" />
+    <Compile Include="CaptchaHelper.cs" />
+    <Compile Include="ChineseCalendarHelper.cs" />
     <Compile Include="ChineseToPinYinHelper.cs" />
+    <Compile Include="ConfigHelper-v1.cs" />
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="ConsoleHelper.cs" />
     <Compile Include="ConvertHelper.cs" />
@@ -79,6 +85,13 @@
     <Compile Include="CsvHelper.cs" />
     <Compile Include="DataTableHelper.cs" />
     <Compile Include="DesEncryptHelper.cs" />
+    <Compile Include="DownloadHelper.cs" />
+    <Compile Include="EncryptionHelper\AesEncrypt.cs" />
+    <Compile Include="EncryptionHelper\DesEncrypt.cs" />
+    <Compile Include="EncryptionHelper\HashEncode.cs" />
+    <Compile Include="EncryptionHelper\Pbkdf2Security.cs" />
+    <Compile Include="EncryptionHelper\RsaCryption.cs" />
+    <Compile Include="EncryptionHelper\TripleDesEncrypt.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExcelHelper.cs" />
@@ -92,6 +105,7 @@
     <Compile Include="ExtensionHelper\ListExtHelper.cs" />
     <Compile Include="ExtensionHelper\ObjectExtHelper.cs" />
     <Compile Include="ExtensionHelper\StringExtHelper.cs" />
+    <Compile Include="ExtensionHelper\TimeHelper.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="HttpHeper.cs" />
     <Compile Include="ImageHelper.cs" />
@@ -107,20 +121,33 @@
     <Compile Include="PageResult.cs" />
     <Compile Include="PDFHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomHelper.cs" />
     <Compile Include="ReflectionExtension\AssemblyExtension.cs" />
     <Compile Include="ReflectionExtension\DynamicMethodMemberAccessor.cs" />
     <Compile Include="ReflectionExtension\IMemberAccessor.cs" />
     <Compile Include="ReflectionExtension\ReflectionHelper.cs" />
     <Compile Include="RegexHelper.cs" />
+    <Compile Include="RequestHelper.cs" />
     <Compile Include="RsaEncryptHelper.cs" />
+    <Compile Include="RuntimeCacheHelper.cs" />
     <Compile Include="SecurityHelper.cs" />
     <Compile Include="SendMailHelper.cs" />
+    <Compile Include="SessionHelper.cs" />
+    <Compile Include="SimilarityHelper.cs" />
+    <Compile Include="SimpleTool.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SmtpMailHelper.cs" />
     <Compile Include="SqlBulkHelper.cs" />
+    <Compile Include="StreamExt.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="SysHelper.cs" />
+    <Compile Include="UbbHelper.cs" />
     <Compile Include="ValidateCodeHelper.cs" />
+    <Compile Include="VideoHelper.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="WebApiHelper.cs" />
+    <Compile Include="WebResourceHelper.cs" />
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
