@@ -843,6 +843,7 @@ namespace Framework.CDQXIN.Utils
         /// 可以导出复杂表头的表格（通过拼接table然后正则解析）
         /// </summary>
         /// <param name="strHtml"></param>
+        /// <param name="isChangeCellType">是否更改单元格格式</param>
         public static void ExportExcel_Universal(string strHtml,bool isChangeCellType=false)
         {
             HSSFWorkbook hssfworkbook = new HSSFWorkbook(); ;//创建Workbook对象
