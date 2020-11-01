@@ -843,7 +843,7 @@ namespace Framework.CDQXIN.Utils
         /// 可以导出复杂表头的表格（通过拼接table然后正则解析）
         /// </summary>
         /// <param name="strHtml"></param>
-        public static void ExportExcel_Universal(string strHtml)
+        public static void ExportExcel_Universal(string strHtml,bool isChangeCellType=false)
         {
             HSSFWorkbook hssfworkbook = new HSSFWorkbook(); ;//创建Workbook对象
             HSSFSheet sheet1 = (HSSFSheet)hssfworkbook.CreateSheet("测试多表头");//创建工作表
@@ -862,6 +862,10 @@ namespace Framework.CDQXIN.Utils
                 for (int j = 0; j < columnCollection.Count; j++)
                 {
                     var match = Regex.Match(columnCollection[j].Value, "<td[\\s\\S]*?rowspan='(?<row>[\\s\\S]*?)'[\\s\\S]*?colspan='(?<col>[\\s\\S]*?)'[\\s\\S]*?row='(?<row1>[\\s\\S]*?)'[\\s\\S]*?col='(?<col1>[\\s\\S]*?)'>(?<value>[\\s\\S]*?)<\\/td>", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                    if (isChangeCellType)
+                    {
+                        match = Regex.Match(columnCollection[j].Value, "<td[\\s\\S]*?rowspan='(?<row>[\\s\\S]*?)'[\\s\\S]*?colspan='(?<col>[\\s\\S]*?)'[\\s\\S]*?row='(?<row1>[\\s\\S]*?)'[\\s\\S]*?col='(?<col1>[\\s\\S]*?)'[\\s\\S]*?fmat='(?<fmat1>[\\s\\S]*?)'>(?<value>[\\s\\S]*?)<\\/td>", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                    }
                     if (match.Success)
                     {
                         int rowspan = Convert.ToInt32(match.Groups["row"].Value);//表格跨行
@@ -874,6 +878,19 @@ namespace Framework.CDQXIN.Utils
                         {
                             var cell = row.CreateCell(col);//创建列
                             cell.SetCellValue(value);//设置列的值
+                            if (isChangeCellType)
+                            {
+                                string fmat1 = ConvertHelper.GetString(match.Groups["fmat1"]);
+                                if (!string.IsNullOrWhiteSpace(fmat1)&&fmat1=="numberic")
+                                {
+                                    #region 使用千位分隔符
+                                    var cstyle = hssfworkbook.CreateCellStyle();
+                                    cstyle.DataFormat = HSSFDataFormat.GetBuiltinFormat("#,##0.00");
+                                    cell.CellStyle = cstyle;
+                                    #endregion
+                                }
+                            }
+                           
                             if (value.Length > 0)
                             {
                                 int width = value.Length * 25 / 6;
