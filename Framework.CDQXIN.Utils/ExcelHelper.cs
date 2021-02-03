@@ -884,7 +884,7 @@ namespace Framework.CDQXIN.Utils
                                 string fmat1 = ConvertHelper.GetString(match.Groups["fmat1"]);
                                 if (!string.IsNullOrWhiteSpace(fmat1)&&fmat1=="numberic")
                                 {
-                                    #region 使用千位分隔符
+                                    #region 使用千位分隔符 
                                     cell.SetCellValue(ConvertHelper.GetDouble(value));//设置列的值
                                     var cstyle = hssfworkbook.CreateCellStyle();
                                     cstyle.DataFormat = HSSFDataFormat.GetBuiltinFormat("#,##0.00");
