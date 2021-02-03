@@ -878,17 +878,37 @@ namespace Framework.CDQXIN.Utils
                         if (colspan == 1)//判断是否跨列
                         {
                             var cell = row.CreateCell(col);//创建列
-                            cell.SetCellValue(value);//设置列的值
+                            
                             if (isChangeCellType)
                             {
                                 string fmat1 = ConvertHelper.GetString(match.Groups["fmat1"]);
                                 if (!string.IsNullOrWhiteSpace(fmat1)&&fmat1=="numberic")
                                 {
                                     #region 使用千位分隔符
+                                    cell.SetCellValue(ConvertHelper.GetDouble(value));//设置列的值
                                     var cstyle = hssfworkbook.CreateCellStyle();
                                     cstyle.DataFormat = HSSFDataFormat.GetBuiltinFormat("#,##0.00");
                                     cell.CellStyle = cstyle;
                                     #endregion
+                                }
+                                else if (!string.IsNullOrWhiteSpace(fmat1)&&fmat1=="numeric2")
+                                {
+                                    cell.SetCellValue(ConvertHelper.GetDouble(value));//设置列的值
+                                    var cstyle = hssfworkbook.CreateCellStyle();
+                                    cstyle.DataFormat = HSSFDataFormat.GetBuiltinFormat("0.00");
+                                    cell.CellStyle = cstyle;
+                                }
+                                else if(!string.IsNullOrWhiteSpace(fmat1)&&fmat1=="percent")
+                                {
+                                    cell.SetCellValue(ConvertHelper.GetDouble(value));//设置列的值
+                                    var cstyle = hssfworkbook.CreateCellStyle();
+                                    cstyle.DataFormat = HSSFDataFormat.GetBuiltinFormat("0.00%");
+                                    cell.CellStyle = cstyle;
+                                }
+                                else
+                                {
+                                    cell.SetCellValue(value);
+                                    cell.CellStyle.WrapText = true;
                                 }
                             }
                            

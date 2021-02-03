@@ -94,6 +94,7 @@
     <Compile Include="EncryptionHelper\TripleDesEncrypt.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="ExcelFomatFactory.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExtendExpression\ExpressionExt.cs" />
     <Compile Include="ExtendExpression\Visitor\ConditionBuilderVisitor.cs" />
