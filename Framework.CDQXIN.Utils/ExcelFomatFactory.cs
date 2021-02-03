@@ -21,7 +21,7 @@ namespace Framework.CDQXIN.Utils
             string htmlContext = "";
             int row = 0;
             T t = default(T);
-            htmlContext += this.BuildHeaderExcelHtml<T>(t,out row);
+            htmlContext += BuildHeaderExcelHtml<T>(t,out row);
             var strBody = "";
             if (tList?.Count>0)
             {
