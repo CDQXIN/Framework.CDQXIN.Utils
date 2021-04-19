@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Framework.CDQXIN.Utils
 {
 	/// <summary>
-	///
+	///添加注释2
 	/// </summary>
 	[Serializable]
 	internal class ApiGateResult
