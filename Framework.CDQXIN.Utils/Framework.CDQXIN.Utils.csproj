@@ -121,6 +121,7 @@
     <Compile Include="MemoryCacheHelper.cs" />
     <Compile Include="PageResult.cs" />
     <Compile Include="PDFHelper.cs" />
+    <Compile Include="PHPSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomHelper.cs" />
     <Compile Include="ReflectionExtension\AssemblyExtension.cs" />
