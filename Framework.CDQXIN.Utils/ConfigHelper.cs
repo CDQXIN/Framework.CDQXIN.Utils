@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Framework.CDQXIN.Utils
 {
+    //注释
     public class ConfigHelper
     {
         #region 读取配置信息的方法
