@@ -126,6 +126,7 @@
     <Compile Include="PDFHelper.cs" />
     <Compile Include="PHPSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueueHelper.cs" />
     <Compile Include="RandomHelper.cs" />
     <Compile Include="ReflectionExtension\AssemblyExtension.cs" />
     <Compile Include="ReflectionExtension\DynamicMethodMemberAccessor.cs" />
