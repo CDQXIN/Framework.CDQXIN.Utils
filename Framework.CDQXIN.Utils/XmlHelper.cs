@@ -160,5 +160,18 @@ namespace Framework.CDQXIN.Utils
             }
             return null;
         }
+
+        public T DeSerializeToObject<T>(string message)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+            using (XmlReader reader = XmlReader.Create(new StringReader(message)))
+            {
+                if (xmlSerializer.CanDeserialize(reader))
+                {
+                    return (T)xmlSerializer.Deserialize(reader);
+                }
+            }
+            return default;
+        }
     }
 }
